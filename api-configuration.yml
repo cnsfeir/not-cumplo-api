@@ -146,6 +146,127 @@ paths:
         201:
           description: CREATED
 
+  "/filters":
+    get:
+      operationId: getFilters
+      x-google-backend:
+        address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+
+    post:
+      operationId: postFilter
+      x-google-backend:
+        address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Filter"
+      responses:
+        201:
+          description: CREATED
+
+  "/filters/{id_filter}":
+    get:
+      operationId: getSingleFilter
+      x-google-backend:
+        address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+        - name: id_filter
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+
+    patch:
+      operationId: patchFilter
+      x-google-backend:
+        address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+        - name: id_filter
+          in: path
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Filter"
+      responses:
+        200:
+          description: OK
+
+    delete:
+      operationId: deleteFilter
+      x-google-backend:
+        address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+        - name: id_filter
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+
 definitions:
   Channel:
+    type: object
+  Filter:
     type: object
