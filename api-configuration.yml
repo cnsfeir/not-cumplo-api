@@ -3,7 +3,7 @@ swagger: "2.0"
 info:
   title: Unofficial Cumplo API
   description: An independent API that unlocks the full potential of your Cumplo experience for smarter and faster investments with data-driven decision making and enhanced risk management
-  version: 0.0.1
+  version: 0.0.2
 
 schemes:
   - https
