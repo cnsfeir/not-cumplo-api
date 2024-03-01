@@ -17,6 +17,21 @@ securityDefinitions:
     name: x-api-key
     in: header
 
+x-google-management:
+  metrics:
+    - name: cumplo-api-rate-limit
+      displayName: Cumplo API Rate Limit
+      valueType: INT64
+      metricKind: DELTA
+
+  quota:
+    limits:
+      - name: cumplo-api-quota
+        metric: cumplo-api-rate-limit
+        unit: 1/min/{project}
+        values:
+          STANDARD: 5
+
 paths:
   "/funding-requests":
     get:
@@ -26,6 +41,9 @@ paths:
         path_translation: APPEND_PATH_TO_ADDRESS
       security:
         - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
       parameters:
         - name: x-api-key
           in: header
@@ -43,6 +61,9 @@ paths:
         path_translation: APPEND_PATH_TO_ADDRESS
       security:
         - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
       parameters:
         - name: x-api-key
           in: header
@@ -61,6 +82,9 @@ paths:
         path_translation: APPEND_PATH_TO_ADDRESS
       security:
         - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
       parameters:
         - name: x-api-key
           in: header
@@ -78,6 +102,9 @@ paths:
         path_translation: APPEND_PATH_TO_ADDRESS
       security:
         - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
       parameters:
         - name: x-api-key
           in: header
@@ -98,6 +125,9 @@ paths:
         path_translation: APPEND_PATH_TO_ADDRESS
       security:
         - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
       parameters:
         - name: x-api-key
           in: header
