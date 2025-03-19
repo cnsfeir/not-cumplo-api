@@ -3,7 +3,7 @@ swagger: "2.0"
 info:
   title: Unofficial Cumplo API
   description: An independent API that unlocks the full potential of your Cumplo experience for smarter and faster investments with data-driven decision making and enhanced risk management
-  version: 0.1.0
+  version: 1.0.0
 
 schemes:
   - https
@@ -35,7 +35,7 @@ x-google-management:
 paths:
   "/funding-requests":
     get:
-      operationId: getFundingRequests
+      operationId: listFundingRequests
       x-google-backend:
         address: https://cumplo-spotter-ryugxhk4ca-uc.a.run.app
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -55,7 +55,7 @@ paths:
 
   "/funding-requests/promising":
     get:
-      operationId: getPromisingFundingRequests
+      operationId: listPromisingFundingRequests
       x-google-backend:
         address: https://cumplo-spotter-ryugxhk4ca-uc.a.run.app
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -74,9 +74,35 @@ paths:
         200:
           description: OK
 
+  "/funding-requests/{id}":
+    get:
+      operationId: retrieveFundingRequest
+      x-google-backend:
+        address: https://cumplo-spotter-ryugxhk4ca-uc.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
+      parameters:
+        - name: x-api-key
+          in: header
+          description: API key
+          required: true
+          type: string
+        - name: id
+          in: path
+          description: Funding request ID
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+
   "/channels":
     get:
-      operationId: getChannels
+      operationId: listChannels
       x-google-backend:
         address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -94,9 +120,9 @@ paths:
         200:
           description: OK
 
-  "/channels/{channel_type}":
+  "/channels/{id}":
     get:
-      operationId: getSingleChannel
+      operationId: retrieveChannel
       x-google-backend:
         address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -110,16 +136,16 @@ paths:
           in: header
           required: true
           type: string
-        - name: channel_type
+        - name: id
           in: path
           required: true
           type: string
       responses:
         200:
           description: OK
-
-    post:
-      operationId: postChannel
+    
+    delete:
+      operationId: deleteChannel
       x-google-backend:
         address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -133,8 +159,28 @@ paths:
           in: header
           required: true
           type: string
-        - name: channel_type
+        - name: id
           in: path
+          required: true
+          type: string
+      responses:
+        204:
+          description: NO CONTENT
+
+  "/channels/whatsapp":
+    post:
+      operationId: createWhatsappChannel
+      x-google-backend:
+        address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
+      parameters:
+        - name: x-api-key
+          in: header
           required: true
           type: string
         - name: body
@@ -146,9 +192,196 @@ paths:
         201:
           description: CREATED
 
+    patch:
+      operationId: updateWhatsappChannel
+      x-google-backend:
+        address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Channel"
+      responses:
+        200:
+          description: OK
+
+  "/channels/webhook":
+    post:
+      operationId: createWebhookChannel
+      x-google-backend:
+        address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Channel"
+      responses:
+        201:
+          description: CREATED
+
+  "/channels/webhook/{id}":
+    patch:
+      operationId: updateWebhookChannel
+      x-google-backend:
+        address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Channel"
+      responses:
+        200:
+          description: OK
+
+  "/channels/ifttt":
+    post:
+      operationId: createIftttChannel
+      x-google-backend:
+        address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Channel"
+      responses:
+        201:
+          description: CREATED
+
+  "/channels/ifttt/{id}":
+    patch:
+      operationId: updateIftttChannel
+      x-google-backend:
+        address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Channel"
+      responses:
+        200:
+          description: OK
+
+  "/channels/{id}/events/{event}":
+    post:
+      operationId: enableChannelEvent
+      x-google-backend:
+        address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: event
+          in: path
+          required: true
+          type: string
+      responses:
+        201:
+          description: CREATED
+    
+    delete:
+      operationId: disableChannelEvent
+      x-google-backend:
+        address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: event
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+
   "/filters":
     get:
-      operationId: getFilters
+      operationId: listFilters
       x-google-backend:
         address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -190,9 +423,9 @@ paths:
         201:
           description: CREATED
 
-  "/filters/{id_filter}":
+  "/filters/{id}":
     get:
-      operationId: getSingleFilter
+      operationId: retrieveFilter
       x-google-backend:
         address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -206,7 +439,7 @@ paths:
           in: header
           required: true
           type: string
-        - name: id_filter
+        - name: id
           in: path
           required: true
           type: string
@@ -229,7 +462,7 @@ paths:
           in: header
           required: true
           type: string
-        - name: id_filter
+        - name: id
           in: path
           required: true
           type: string
@@ -257,7 +490,7 @@ paths:
           in: header
           required: true
           type: string
-        - name: id_filter
+        - name: id
           in: path
           required: true
           type: string
