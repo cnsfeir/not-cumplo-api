@@ -3,7 +3,7 @@ swagger: "2.0"
 info:
   title: Unofficial Cumplo API
   description: An independent API that unlocks the full potential of your Cumplo experience for smarter and faster investments with data-driven decision making and enhanced risk management
-  version: 1.0.0
+  version: 1.1.0
 
 schemes:
   - https
@@ -99,6 +99,46 @@ paths:
       responses:
         200:
           description: OK
+
+  "/users/me":
+    delete:
+      operationId: deleteUser
+      x-google-backend:
+        address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+      responses:
+        204:
+          description: NO CONTENT
+
+  "/users/me/disable":
+    patch:
+      operationId: disableUser
+      x-google-backend:
+        address: https://cumplo-tailor-ryugxhk4ca-uc.a.run.app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      x-google-quota:
+        metricCosts:
+          cumplo-api-rate-limit: 1
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+      responses:
+        204:
+          description: NO CONTENT
 
   "/channels":
     get:
