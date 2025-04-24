@@ -2,7 +2,7 @@
 <br>
 
 <div align="center">
-  <img src="https://github.com/cnsfeir/unofficial-cumplo-api/assets/58790635/7ec02b41-9d26-4f9f-ab9b-c41ca08053d0" width="650"/>
+  <img src="https://github.com/user-attachments/assets/1b63cbdd-4b65-4302-bcb5-fadf6cfcca16" width="100%"/>
 </div>
 
 <br>
